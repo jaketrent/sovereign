@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "syntax-export-extensions",
+    "transform-export-extensions",
+    "glamorous-displayname"
+  ],
+  "presets": ["babel-preset-react-app"]
+}
