@@ -5,12 +5,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "postcommit": "cat .git/COMMIT_EDITMSG | commitlint"
   },
   "keywords": [],
   "author": "jaketrent",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^3.1.2",
+    "@commitlint/config-angular": "^3.1.1",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.3",
     "prettier": "^1.5.3"
