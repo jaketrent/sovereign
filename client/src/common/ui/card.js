@@ -166,16 +166,14 @@ class CardComponent extends React.Component {
 }
 
 CardComponent.propTypes = {
-  type: PropTypes.string,
   faceDown: PropTypes.bool,
   disabled: PropTypes.bool,
   onFlip: PropTypes.func,
   onKeyDown: PropTypes.func,
+  onClick: PropTypes.func,
   children: PropTypes.element.isRequired
 }
 CardComponent.defaultProps = {
-  // TODO: rm
-  type: 'horizontal',
   faceDown: false,
   disabled: false
 }
