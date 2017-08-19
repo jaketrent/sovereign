@@ -41,12 +41,20 @@ const faceStyles = glamor.css({
   transformStyle: 'preserve-3d',
   transform: 'rotateY(0deg)'
 })
-const Front = g.div(faceStyles, {
-  zIndex: 2
-})
-const Back = g.div(faceStyles, {
-  transform: 'rotateY(-180deg)'
-})
+const Front = g.div(
+  faceStyles,
+  {
+    zIndex: 2
+  },
+  ({ flipped }) => (flipped ? { transform: 'rotateY(180deg)' } : null)
+)
+const Back = g.div(
+  faceStyles,
+  {
+    transform: 'rotateY(-180deg)'
+  },
+  ({ flipped }) => (flipped ? { transform: 'rotateY(0deg)' } : null)
+)
 
 class CardComponent extends React.Component {
   constructor(props) {
@@ -160,10 +168,20 @@ class CardComponent extends React.Component {
         onKeyDown={this.handleKeyDown}
       >
         <Flipper>
-          <Front ref="front" tabIndex={-1} aria-hidden={this.state.isFlipped}>
+          <Front
+            ref="front"
+            tabIndex={-1}
+            aria-hidden={this.state.isFlipped}
+            flipped={this.state.isFlipped}
+          >
             {this.props.children}
           </Front>
-          <Back ref="back" tabIndex={-1} aria-hidden={!this.state.isFlipped} />
+          <Back
+            ref="back"
+            tabIndex={-1}
+            aria-hidden={!this.state.isFlipped}
+            flipped={this.state.isFlipped}
+          />
         </Flipper>
       </Card>
     )
