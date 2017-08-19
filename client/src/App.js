@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import List from './list'
+import Lobby from './lobby'
+import Table from './table'
+import Hand from './hand'
 
-export default App;
+export default _ =>
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={List} />
+      <Route exact path="/game/:id" component={Lobby} />
+      <Route exact path="/game/:id/table" component={Table} />
+      <Route exact path="/game/:id/hand" component={Hand} />
+    </Switch>
+  </BrowserRouter>
