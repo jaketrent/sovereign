@@ -1,7 +1,7 @@
 import g from 'glamorous'
 import React from 'react'
 
-import { Card, Face, Players } from '../common/ui'
+import { Card, EndTurn, Face, Players } from '../common/ui'
 
 const Cards = g.div({ display: 'flex' })
 
@@ -12,6 +12,7 @@ export default _ =>
       activePlayerName="Jake"
       players={[{ name: 'Jake' }, { name: 'Anne' }]}
     />
+    <EndTurn />
     <Cards>
       <Card faceDown>
         <Face.Copper />
