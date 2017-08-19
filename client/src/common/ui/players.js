@@ -14,16 +14,22 @@ const Player = g.div(
   ({ isActive }) => ({ color: isActive ? 'red' : 'black' })
 )
 
+const Meta = props =>
+  <div>
+    Actions: {props.turn.actionsRemaining}
+    Buys: {props.turn.buysRemaining}
+  </div>
+
 const renderPlayers = props =>
-  props.players.map(p =>
-    <Player
-      name={p.name}
-      key={p.name}
-      isActive={p.name === props.activePlayerName}
-    >
-      {p.name}
-    </Player>
-  )
+  props.players.map(p => {
+    const isActive = p.name === props.turn.playerName
+    return (
+      <Player name={p.name} key={p.name} isActive={isActive}>
+        {p.name}
+        {isActive && <Meta turn={props.turn} />}
+      </Player>
+    )
+  })
 
 export default props =>
   <Players>

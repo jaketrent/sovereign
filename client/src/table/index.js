@@ -9,8 +9,8 @@ export default _ =>
   <div>
     <h2>table</h2>
     <Players
-      activePlayerName="Jake"
       players={[{ name: 'Jake' }, { name: 'Anne' }]}
+      turn={{ actionsRemaining: 1, buysRemaining: 1, playerName: 'Jake' }}
     />
     <EndTurn />
     <Cards>
