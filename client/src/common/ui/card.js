@@ -21,11 +21,14 @@ const Card = g.div({
   display: 'inline-block'
 })
 
-// TODO: style
 const Flipper = g.div({
   transition: '0.6s',
   transformStyle: 'preserve-3d',
-  position: 'relative'
+  position: 'relative',
+  height: '100%',
+  width: '100%'
+  // height: 'calc(100% - 2vw)',
+  // width: 'calc(100% - 2vw)'
 })
 
 const faceStyles = glamor.css({
@@ -44,7 +47,7 @@ const Front = g.div(
   {
     zIndex: 2
   },
-  ({ flipped }) => (flipped ? { transform: 'rotateY(180deg)' } : null)
+  ({ faceDown }) => (faceDown ? { transform: 'rotateY(180deg)' } : null)
 )
 const Back = g.div(
   faceStyles,
@@ -54,7 +57,7 @@ const Back = g.div(
     border: `1vw solid #aaa`,
     transform: 'rotateY(-180deg)'
   },
-  ({ flipped }) => (flipped ? { transform: 'rotateY(0deg)' } : null)
+  ({ faceDown }) => (faceDown ? { transform: 'rotateY(0deg)' } : null)
 )
 
 class CardComponent extends React.Component {
@@ -62,16 +65,16 @@ class CardComponent extends React.Component {
     super(props)
     this.state = {
       hasFocus: false,
-      isFlipped: this.props.flipped
+      isFaceDown: this.props.faceDown
     }
     this.handleFocus = this.handleFocus.bind(this)
     this.handleBlur = this.handleBlur.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
-    this._hideFlippedSide = this._hideFlippedSide.bind(this)
+    this._hideFaceDownSide = this._hideFaceDownSide.bind(this)
     this._showBothSides = this._showBothSides.bind(this)
   }
   componentDidMount() {
-    this._hideFlippedSide()
+    this._hideFaceDownSide()
   }
   componentWillReceiveProps(newProps) {
     // Make sure both sides are displayed for animation
@@ -80,29 +83,29 @@ class CardComponent extends React.Component {
     // Wait for display above to take effect
     setTimeout(() => {
       this.setState({
-        isFlipped: newProps.flipped
+        isFaceDown: newProps.faceDown
       })
     }, 0)
   }
   componentWillUpdate(nextProps, nextState) {
     // If card is flipping to back via props, track element for focus
-    if (!this.props.flipped && nextProps.flipped) {
-      // The element that focus will return to when flipped back to front
+    if (!this.props.faceDown && nextProps.faceDown) {
+      // The element that focus will return to when faceDown back to front
       this.focusElement = document.activeElement
       // Indicates that the back of card needs focus
       this.focusBack = true
     }
 
-    // If isFlipped has changed need to notify
-    if (this.state.isFlipped !== nextState.isFlipped) {
+    // If isFaceDown has changed need to notify
+    if (this.state.isFaceDown !== nextState.isFaceDown) {
       this.notifyFlip = true
     }
   }
   componentDidUpdate() {
-    // If card has flipped to front, and focus is still within the card
+    // If card has faceDown to front, and focus is still within the card
     // return focus to the element that triggered flipping to the back.
     if (
-      !this.props.flipped &&
+      !this.props.faceDown &&
       this.focusElement &&
       contains(ReactDOM.findDOMNode(this), document.activeElement)
     ) {
@@ -115,21 +118,21 @@ class CardComponent extends React.Component {
       this.focusBack = false
     }
 
-    // Notify card being flipped
+    // Notify card being faceDown
     if (this.notifyFlip && typeof this.props.onFlip === 'function') {
-      this.props.onFlip(this.state.isFlipped)
+      this.props.onFlip(this.state.isFaceDown)
       this.notifyFlip = false
     }
 
     // Hide whichever side of the card is down
-    setTimeout(this._hideFlippedSide, 600)
+    setTimeout(this._hideFaceDownSide, 600)
   }
 
   handleFocus() {
     if (this.props.disabled) return
 
     this.setState({
-      isFlipped: true
+      isFaceDown: true
     })
   }
 
@@ -137,7 +140,7 @@ class CardComponent extends React.Component {
     if (this.props.disabled) return
 
     this.setState({
-      isFlipped: false
+      isFaceDown: false
     })
   }
 
@@ -150,10 +153,10 @@ class CardComponent extends React.Component {
     this.refs.front.style.display = ''
     this.refs.back.style.display = ''
   }
-  _hideFlippedSide() {
-    // This prevents the flipped side from being tabbable
+  _hideFaceDownSide() {
+    // This prevents the faceDown side from being tabbable
     if (this.props.disabled) {
-      if (this.state.isFlipped) {
+      if (this.state.isFaceDown) {
         this.refs.front.style.display = 'none'
       } else {
         this.refs.back.style.display = 'none'
@@ -172,16 +175,16 @@ class CardComponent extends React.Component {
           <Front
             ref="front"
             tabIndex={-1}
-            aria-hidden={this.state.isFlipped}
-            flipped={this.state.isFlipped}
+            aria-hidden={this.state.isFaceDown}
+            faceDown={this.state.isFaceDown}
           >
             {this.props.children}
           </Front>
           <Back
             ref="back"
             tabIndex={-1}
-            aria-hidden={!this.state.isFlipped}
-            flipped={this.state.isFlipped}
+            aria-hidden={!this.state.isFaceDown}
+            faceDown={this.state.isFaceDown}
           />
         </Flipper>
       </Card>
@@ -191,7 +194,7 @@ class CardComponent extends React.Component {
 
 CardComponent.propTypes = {
   type: PropTypes.string,
-  flipped: PropTypes.bool,
+  faceDown: PropTypes.bool,
   disabled: PropTypes.bool,
   onFlip: PropTypes.func,
   onKeyDown: PropTypes.func,
@@ -200,7 +203,7 @@ CardComponent.propTypes = {
 CardComponent.defaultProps = {
   // TODO: rm
   type: 'horizontal',
-  flipped: false,
+  faceDown: false,
   disabled: false
 }
 

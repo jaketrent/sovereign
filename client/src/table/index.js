@@ -9,7 +9,7 @@ export default _ =>
   <div>
     <h2>table</h2>
     <Cards>
-      <Card flipped>
+      <Card faceDown>
         <Face.Copper />
       </Card>
       <Card>
