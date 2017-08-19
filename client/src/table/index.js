@@ -1,7 +1,7 @@
 import g from 'glamorous'
 import React from 'react'
 
-import { Card } from '../common/ui'
+import { Card, Face } from '../common/ui'
 
 const Cards = g.div({ display: 'flex' })
 
@@ -9,26 +9,15 @@ export default _ =>
   <div>
     <h2>table</h2>
     <Cards>
-      <Card />
-      <Card />
-      <Card />
-    </Cards>
-    <Cards>
-      <Card />
-      <Card />
-      <Card />
-    </Cards>
-    <Cards>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <Card>
+        <Face.Copper />
+      </Card>
+      <Card>
+        <Face.Silver />
+      </Card>
+      <Card>
+        <Face.Gold />
+      </Card>
     </Cards>
     <ul>
       <li>show cards</li>
