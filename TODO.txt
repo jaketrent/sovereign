@@ -1,0 +1,23 @@
+list games
+join
+create
+
+game lobby
+join table
+join player
+
+table
+show cards
+draw cards on turn
+buy cards on turn
+active player
+  remaining actions
+  remaining buys
+  played cards on turn
+
+hand
+see hand
+see deck
+see discard pile
+draw cards on turn
+play cards on turn
