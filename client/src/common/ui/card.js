@@ -27,8 +27,6 @@ const Flipper = g.div({
   position: 'relative',
   height: '100%',
   width: '100%'
-  // height: 'calc(100% - 2vw)',
-  // width: 'calc(100% - 2vw)'
 })
 
 const faceStyles = glamor.css({
@@ -67,9 +65,9 @@ class CardComponent extends React.Component {
       hasFocus: false,
       isFaceDown: this.props.faceDown
     }
-    this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
-    this.handleKeyDown = this.handleKeyDown.bind(this)
+    // this.handleFocus = this.handleFocus.bind(this)
+    // this.handleBlur = this.handleBlur.bind(this)
+    this.handleClick = this.handleClick.bind(this)
     this._hideFaceDownSide = this._hideFaceDownSide.bind(this)
     this._showBothSides = this._showBothSides.bind(this)
   }
@@ -113,8 +111,7 @@ class CardComponent extends React.Component {
       this.focusElement = null
     } else if (this.focusBack) {
       // Direct focus to the back if needed
-      /* eslint brace-style:0 */
-      this.refs.back.focus()
+      this.back.focus()
       this.focusBack = false
     }
 
@@ -127,53 +124,29 @@ class CardComponent extends React.Component {
     // Hide whichever side of the card is down
     setTimeout(this._hideFaceDownSide, 600)
   }
-
-  handleFocus() {
-    if (this.props.disabled) return
-
-    this.setState({
-      isFaceDown: true
-    })
-  }
-
-  handleBlur() {
-    if (this.props.disabled) return
-
-    this.setState({
-      isFaceDown: false
-    })
-  }
-
-  handleKeyDown(e) {
-    if (typeof this.props.onKeyDown === 'function') {
-      this.props.onKeyDown(e)
-    }
+  handleClick() {
+    this.setState(_ => ({ isFaceDown: !this.state.isFaceDown }))
   }
   _showBothSides() {
-    this.refs.front.style.display = ''
-    this.refs.back.style.display = ''
+    this.front.style.display = ''
+    this.back.style.display = ''
   }
   _hideFaceDownSide() {
     // This prevents the faceDown side from being tabbable
     if (this.props.disabled) {
       if (this.state.isFaceDown) {
-        this.refs.front.style.display = 'none'
+        this.front.style.display = 'none'
       } else {
-        this.refs.back.style.display = 'none'
+        this.back.style.display = 'none'
       }
     }
   }
   render() {
     return (
-      <Card
-        tabIndex={0}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        onKeyDown={this.handleKeyDown}
-      >
+      <Card tabIndex={0} onClick={this.handleClick}>
         <Flipper>
           <Front
-            ref="front"
+            ref={c => (this.front = ReactDOM.findDOMNode(c))}
             tabIndex={-1}
             aria-hidden={this.state.isFaceDown}
             faceDown={this.state.isFaceDown}
@@ -181,7 +154,7 @@ class CardComponent extends React.Component {
             {this.props.children}
           </Front>
           <Back
-            ref="back"
+            ref={c => (this.back = ReactDOM.findDOMNode(c))}
             tabIndex={-1}
             aria-hidden={!this.state.isFaceDown}
             faceDown={this.state.isFaceDown}
