@@ -1,13 +1,17 @@
 import g from 'glamorous'
 import React from 'react'
 
-import { Card, Face } from '../common/ui'
+import { Card, Face, Players } from '../common/ui'
 
 const Cards = g.div({ display: 'flex' })
 
 export default _ =>
   <div>
     <h2>table</h2>
+    <Players
+      activePlayerName="Jake"
+      players={[{ name: 'Jake' }, { name: 'Anne' }]}
+    />
     <Cards>
       <Card faceDown>
         <Face.Copper />
