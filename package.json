@@ -5,6 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "client:start": "cd client && npm run start",
+    "server:start": "cd server && npm run start",
     "precommit": "lint-staged",
     "postcommit": "cat .git/COMMIT_EDITMSG | commitlint"
   },
