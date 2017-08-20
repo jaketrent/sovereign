@@ -1,17 +1,21 @@
 import g from 'glamorous'
 import React from 'react'
 
-import { Card, EndTurn, Face, Players } from '../common/ui'
+import { Card, CardsPlayed, EndTurn, Face, Players } from '../common/ui'
 
 const Cards = g.div({ display: 'flex', flexWrap: 'wrap' })
+
+const turn = {
+  actionsRemaining: 1,
+  buysRemaining: 1,
+  playerName: 'Jake',
+  cardsPlayed: [{ name: 'market' }]
+}
 
 export default _ =>
   <div>
     <h2>table</h2>
-    <Players
-      players={[{ name: 'Jake' }, { name: 'Anne' }]}
-      turn={{ actionsRemaining: 1, buysRemaining: 1, playerName: 'Jake' }}
-    />
+    <Players players={[{ name: 'Jake' }, { name: 'Anne' }]} turn={turn} />
     <EndTurn />
     <Cards>
       <Card>
@@ -67,6 +71,7 @@ export default _ =>
         <Face.Workshop />
       </Card>
     </Cards>
+    <CardsPlayed turn={turn} />
     <ul>
       <li>show cards</li>
       <li>draw cards on turn</li>
