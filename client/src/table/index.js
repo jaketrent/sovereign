@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Card, EndTurn, Face, Players } from '../common/ui'
 
-const Cards = g.div({ display: 'flex' })
+const Cards = g.div({ display: 'flex', flexWrap: 'wrap' })
 
 export default _ =>
   <div>
@@ -14,7 +14,18 @@ export default _ =>
     />
     <EndTurn />
     <Cards>
-      <Card faceDown>
+      <Card>
+        <Face.Estate />
+      </Card>
+      <Card>
+        <Face.Duchy />
+      </Card>
+      <Card>
+        <Face.Province />
+      </Card>
+    </Cards>
+    <Cards>
+      <Card>
         <Face.Copper />
       </Card>
       <Card>
@@ -22,6 +33,38 @@ export default _ =>
       </Card>
       <Card>
         <Face.Gold />
+      </Card>
+    </Cards>
+    <Cards>
+      <Card>
+        <Face.Cellar />
+      </Card>
+      <Card>
+        <Face.Market />
+      </Card>
+      <Card>
+        <Face.Merchant />
+      </Card>
+      <Card>
+        <Face.Militia />
+      </Card>
+      <Card>
+        <Face.Mine />
+      </Card>
+      <Card>
+        <Face.Moat />
+      </Card>
+      <Card>
+        <Face.Remodel />
+      </Card>
+      <Card>
+        <Face.Smithy />
+      </Card>
+      <Card>
+        <Face.Village />
+      </Card>
+      <Card>
+        <Face.Workshop />
       </Card>
     </Cards>
     <ul>
