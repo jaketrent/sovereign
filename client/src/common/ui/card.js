@@ -15,8 +15,8 @@ function contains(parent, child) {
 }
 
 const Card = g.div({
-  height: '15vw',
-  width: '9vw',
+  height: '20vmin',
+  minWidth: '17vmin',
   perspective: 1000,
   display: 'inline-block'
 })
@@ -29,30 +29,30 @@ const Flipper = g.div({
   width: '100%'
 })
 
-const faceStyles = glamor.css({
+const sideStyles = glamor.css({
   position: 'absolute',
   top: 0,
   left: 0,
-  height: 'calc(100% - 2vw)',
-  width: 'calc(100% - 2vw)',
+  height: 'calc(100% - 2vmin)',
+  width: 'calc(100% - 2vmin)',
   backfaceVisibility: 'hidden',
   transition: '0.6s',
   transformStyle: 'preserve-3d',
   transform: 'rotateY(0deg)'
 })
 const Front = g.div(
-  faceStyles,
+  sideStyles,
   {
     zIndex: 2
   },
   ({ faceDown }) => (faceDown ? { transform: 'rotateY(180deg)' } : null)
 )
 const Back = g.div(
-  faceStyles,
+  sideStyles,
   {
     background: 'gray',
     borderRadius: '8px',
-    border: `1vw solid #aaa`,
+    border: `1vmin solid #aaa`,
     transform: 'rotateY(-180deg)'
   },
   ({ faceDown }) => (faceDown ? { transform: 'rotateY(0deg)' } : null)
