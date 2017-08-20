@@ -22,6 +22,14 @@ const findAll = async (db, id) => {
   return games
 }
 
+const save = async (db, game) => {
+  const updatedGame = await db('games').where({ id: game.id }).update({
+    state: game.state
+  })
+  return updatedGame
+}
+
+exports.create = create
 exports.find = find
 exports.findAll = findAll
-exports.create = create
+exports.save = save
