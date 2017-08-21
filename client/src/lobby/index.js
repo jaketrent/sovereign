@@ -7,7 +7,7 @@ import NewPlayer from './new-player'
 export default class extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { fetched: false, game: null, newPlayerName: null }
+    this.state = { fetched: false, game: null, newPlayerName: '' }
   }
   async componentDidMount() {
     const body = await games.find(this.props.match.params.id)
@@ -31,28 +31,48 @@ export default class extends React.Component {
   handleNewPlayerSubmit = async evt => {
     evt.preventDefault()
     games.playJoinAsPlayer(this.state.game.id, this.state.newPlayerName)
+    this.setState(_ => ({ newPlayerName: '' }))
   }
   renderLoading() {
     return <div>Loading...</div>
   }
+  renderErrors() {
+    const codesToDisplay = ['errorNewPlayerNameRequired']
+    const errs = this.state.game.errors.filter(err =>
+      codesToDisplay.includes(err.code)
+    )
+    return errs.length > 0
+      ? <ul>
+          {errs.map(err =>
+            <li key={err.code}>
+              {err.detail}
+            </li>
+          )}
+        </ul>
+      : null
+  }
   renderPlayers() {
     return (
-      <ul>
-        {games.getPlayers(this.state.game).map(p =>
-          <li key={p.name}>
-            <a href={`/game/${this.state.game.id}/hand?player=${p.name}`}>
-              {p.name}
-            </a>
-          </li>
-        )}
-      </ul>
+      <div>
+        <ul>
+          {games.getPlayers(this.state.game).map(p =>
+            <li key={p.name}>
+              <a href={`/game/${this.state.game.id}/hand?player=${p.name}`}>
+                {p.name}
+              </a>
+            </li>
+          )}
+        </ul>
+      </div>
     )
   }
   renderGame() {
     return (
       <div>
         {this.renderPlayers()}
+        {this.renderErrors()}
         <NewPlayer
+          value={this.state.newPlayerName}
           onChange={this.handleNewPlayerChange}
           onSubmit={this.handleNewPlayerSubmit}
         />

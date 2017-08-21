@@ -14,7 +14,7 @@ const find = async (db, id) => {
   const games = await db('games').where({
     id
   })
-  return games[0]
+  return { ...games[0], errors: [] }
 }
 
 const findAll = async (db, id) => {

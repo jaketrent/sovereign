@@ -11,7 +11,8 @@ const initGame = _ => ({
     deck: [],
     phase: '',
     turn: {}
-  }
+  },
+  errors: []
 })
 
 module.exports = (game, play = {}) => {
