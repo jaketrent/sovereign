@@ -9,7 +9,7 @@ const initGame = _ => ({
   state: {
     players: [],
     deck: [],
-    phase: '',
+    phase: 'setup',
     turn: {}
   },
   errors: []
@@ -17,8 +17,6 @@ const initGame = _ => ({
 
 module.exports = (game, play = {}) => {
   if (!game) game = initGame()
-
-  console.log('game', game)
 
   return handlers[play.type] ? handlers[play.type](game, play) : game
 }
