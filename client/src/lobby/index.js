@@ -8,7 +8,11 @@ import StartGame from './start-game'
 export default class extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { fetched: false, game: null, newPlayerName: '' }
+    this.state = {
+      fetched: false,
+      game: null,
+      newPlayerName: ''
+    }
   }
   async componentDidMount() {
     const body = await games.find(this.props.match.params.id)
@@ -59,14 +63,14 @@ export default class extends React.Component {
         </ul>
       : null
   }
-  renderPlayers() {
+  renderPlayerLinks() {
     return (
       <div>
         <ul>
           {games.getPlayers(this.state.game).map(p =>
             <li key={p.name}>
               <a href={`/game/${this.state.game.id}/hand?player=${p.name}`}>
-                {p.name}
+                Join as {p.name}
               </a>
             </li>
           )}
@@ -74,17 +78,37 @@ export default class extends React.Component {
       </div>
     )
   }
+  renderPlayers() {
+    return (
+      <div>
+        <ul>
+          {games.getPlayers(this.state.game).map(p =>
+            <li key={p.name}>
+              {p.name}
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
+  renderStartGame() {
+    return this.state.game.state.players.length >= 2
+      ? <StartGame onSubmit={this.handleStartGameSubmit} />
+      : null
+  }
   renderGame() {
     return (
       <div>
-        {this.renderPlayers()}
+        {this.state.game.state.phase === 'setup'
+          ? this.renderPlayers()
+          : this.renderPlayerLinks()}
         {this.renderErrors()}
         <NewPlayer
           value={this.state.newPlayerName}
           onChange={this.handleNewPlayerChange}
           onSubmit={this.handleNewPlayerSubmit}
         />
-        <StartGame onSubmit={this.handleStartGameSubmit} />
+        {this.renderStartGame()}
         <Link to={`/game/${this.state.game.id}/table`}>join as table</Link>
       </div>
     )
