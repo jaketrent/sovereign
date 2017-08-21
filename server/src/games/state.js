@@ -1,3 +1,6 @@
+// @flow
+import type { Game, Play } from './types'
+
 const uuid = require('uuid')
 
 const phase = require('./handlers/phase')
@@ -16,7 +19,7 @@ const initGame = _ => ({
   errors: []
 })
 
-module.exports = (game, play = {}) => {
+module.exports = (game: Game, play: Play = { type: 'unknown' }) => {
   if (!game) game = initGame()
 
   return handlers[play.type] ? handlers[play.type](game, play) : game

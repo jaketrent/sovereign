@@ -1,4 +1,3 @@
-// @flow
 const config = require('./config')
 
 const bodyParser: bodyParser = require('body-parser')
