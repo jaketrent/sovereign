@@ -3,6 +3,7 @@ import React from 'react'
 
 import * as games from '../games'
 import NewPlayer from './new-player'
+import StartGame from './start-game'
 
 export default class extends React.Component {
   constructor(props) {
@@ -28,16 +29,23 @@ export default class extends React.Component {
     const target = evt.target
     this.setState(_ => ({ newPlayerName: target.value }))
   }
-  handleNewPlayerSubmit = async evt => {
+  handleNewPlayerSubmit = evt => {
     evt.preventDefault()
     games.playJoinAsPlayer(this.state.game.id, this.state.newPlayerName)
     this.setState(_ => ({ newPlayerName: '' }))
+  }
+  handleStartGameSubmit = evt => {
+    evt.preventDefault()
+    games.playStartGame(this.state.game.id)
   }
   renderLoading() {
     return <div>Loading...</div>
   }
   renderErrors() {
-    const codesToDisplay = ['errorNewPlayerNameRequired']
+    const codesToDisplay = [
+      'errorStartGamePlayersRequired',
+      'errorNewPlayerNameRequired'
+    ]
     const errs = this.state.game.errors.filter(err =>
       codesToDisplay.includes(err.code)
     )
@@ -76,6 +84,7 @@ export default class extends React.Component {
           onChange={this.handleNewPlayerChange}
           onSubmit={this.handleNewPlayerSubmit}
         />
+        <StartGame onSubmit={this.handleStartGameSubmit} />
         <Link to={`/game/${this.state.game.id}/table`}>join as table</Link>
       </div>
     )

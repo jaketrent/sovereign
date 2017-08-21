@@ -1,8 +1,9 @@
 const uuid = require('uuid')
 
+const phase = require('./handlers/phase')
 const players = require('./handlers/players')
 
-const handlers = { ...players }
+const handlers = { ...phase, ...players }
 
 const initGame = _ => ({
   id: uuid.v4(),

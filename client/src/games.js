@@ -58,3 +58,7 @@ export function getPlayers(game) {
 export function playJoinAsPlayer(id, newPlayerName) {
   play(id, { type: 'joinAsPlayer', newPlayerName })
 }
+
+export function playStartGame(id) {
+  play(id, { type: 'startGame' })
+}
