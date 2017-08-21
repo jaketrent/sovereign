@@ -69,11 +69,16 @@ export default class extends React.Component {
         <ul>
           {games.getPlayers(this.state.game).map(p =>
             <li key={p.name}>
-              <a href={`/game/${this.state.game.id}/hand?player=${p.name}`}>
+              <Link to={`/game/${this.state.game.id}/hand?player=${p.name}`}>
                 Join as {p.name}
-              </a>
+              </Link>
             </li>
           )}
+          <li>
+            <Link to={`/game/${this.state.game.id}/table`}>
+              Join as the Table
+            </Link>
+          </li>
         </ul>
       </div>
     )
@@ -109,7 +114,6 @@ export default class extends React.Component {
           onSubmit={this.handleNewPlayerSubmit}
         />
         {this.renderStartGame()}
-        <Link to={`/game/${this.state.game.id}/table`}>join as table</Link>
       </div>
     )
   }
