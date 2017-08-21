@@ -1,13 +1,11 @@
-const subject = require('../players')
-
 const gameState = require('../../state')
 
 test('joinAsPlayer', () => {
-  const game = subject.joinAsPlayer(gameState(), {
+  const game = gameState(null, {
     type: 'joinAsPlayer',
     newPlayerName: 'Jake'
   })
 
-  expect(game.players.length).toEqual(1)
-  expect(game.players[0].name).toEqual('Jake')
+  expect(game.state.players.length).toEqual(1)
+  expect(game.state.players[0].name).toEqual('Jake')
 })

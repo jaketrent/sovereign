@@ -1,13 +1,13 @@
 const uuid = require('uuid')
 
-const gameState = require('./state')
-
-const create = async db => {
-  const newGame = await db('games').insert({
-    id: uuid.v4(),
-    state: gameState()
-  })
-  return newGame
+const create = async (db, game) => {
+  const rows = await db('games')
+    .insert({
+      id: game.id,
+      state: game.state
+    })
+    .returning('*')
+  return rows[0]
 }
 
 const find = async (db, id) => {

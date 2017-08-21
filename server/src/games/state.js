@@ -1,14 +1,23 @@
-const players = require('./handlers/players')
+const uuid = require('uuid')
 
-const initialState = {
-  players: [],
-  deck: [],
-  phase: '',
-  turn: {}
-}
+const players = require('./handlers/players')
 
 const handlers = { ...players }
 
-module.exports = (game = initialState, play = {}) => {
+const initGame = _ => ({
+  id: uuid.v4(),
+  state: {
+    players: [],
+    deck: [],
+    phase: '',
+    turn: {}
+  }
+})
+
+module.exports = (game, play = {}) => {
+  if (!game) game = initGame()
+
+  console.log('game', game)
+
   return handlers[play.type] ? handlers[play.type](game, play) : game
 }

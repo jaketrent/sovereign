@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 
 import * as games from '../games'
+import NewGame from './new-game'
 
 export default class extends React.Component {
   constructor(props) {
@@ -12,20 +13,28 @@ export default class extends React.Component {
     const body = await games.findAll()
     this.setState(_ => ({ fetched: true, games: body.data }))
   }
+  handleNewGameSubmit = async evt => {
+    evt.preventDefault()
+    const body = await games.create()
+    this.setState(_ => ({ games: [body.data].concat(this.state.games) }))
+  }
   renderLoading() {
     return <div>Loading...</div>
   }
   renderGames() {
     return (
-      <ul>
-        <li>
+      <div>
+        <ul>
           {this.state.games.map(game =>
-            <Link to={`/game/${game.id}`} key={game.id}>
-              {game.id}
-            </Link>
+            <li key={game.id}>
+              <Link to={`/game/${game.id}`}>
+                {game.id}
+              </Link>
+            </li>
           )}
-        </li>
-      </ul>
+        </ul>
+        <NewGame onSubmit={this.handleNewGameSubmit} />
+      </div>
     )
   }
   render() {

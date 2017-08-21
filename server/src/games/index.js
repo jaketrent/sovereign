@@ -8,7 +8,8 @@ const app = express()
 const ios = {}
 
 app.post('/', async (req, res) => {
-  const newGame = await gamesRepo.create(db)
+  const game = gameState()
+  const newGame = await gamesRepo.create(db, game)
   initSocket(req.io, newGame)
   res.json({ data: newGame })
 })
@@ -30,8 +31,7 @@ app.get('/:id', async (req, res) => {
 const handlePlay = async (io, data) => {
   const { id, play } = data
   const game = await gamesRepo.find(db, id)
-  const newState = gameState(game.state, play)
-  const newGame = { ...game, state: newState }
+  const newGame = gameState(game, play)
   await gamesRepo.save(db, newGame)
   io.of('/' + id).emit('game-update', newGame)
 }
