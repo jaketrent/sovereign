@@ -8,6 +8,9 @@ const joinAsPlayerErrors = (game, play) => {
   if (!play.newPlayerName)
     errs.push(err('errorNewPlayerNameRequired', 'Player name is required'))
 
+  if (game.state.players.length >= 4)
+    errs.push(err('errorPlayersMaxCount', 'A max 4 Players allowed'))
+
   return errs.length === 0
     ? null
     : { ...game, errors: game.errors.concat(errs) }
