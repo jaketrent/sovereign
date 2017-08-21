@@ -11,10 +11,10 @@ const create = async db => {
 }
 
 const find = async (db, id) => {
-  const game = await db('games').where({
+  const games = await db('games').where({
     id
   })
-  return game
+  return games[0]
 }
 
 const findAll = async (db, id) => {

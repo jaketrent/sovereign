@@ -1,4 +1,3 @@
-import g from 'glamorous'
 import React from 'react'
 
 import { Card, Face } from './index'

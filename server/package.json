@@ -10,7 +10,9 @@
     "start": "cross-env NODE_ENV=development concurrently \"npm run build -- --watch\" \"nodemon dist\"",
     "build": "babel src/ --out-dir dist/ --no-babelrc --plugins=transform-flow-strip-types,transform-object-rest-spread --ignore spec.js",
     "deploy": "git push heroku master",
-    "heroku-postbuild": "npm run db:migrate && npm run build"
+    "heroku-postbuild": "npm run db:migrate && npm run build",
+    "test": "jest",
+    "test:watch": "npm run test -- --watchAll"
   },
   "engines": {
     "node": "8.x",
@@ -32,11 +34,13 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "concurrently": "^3.5.0",
     "cross-env": "^5.0.5",
     "flow-bin": "^0.53.1",
     "flow-typed": "^2.1.5",
+    "jest": "^20.0.4",
     "nodemon": "^1.11.0"
   }
 }

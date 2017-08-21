@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
 
+import * as games from '../games'
+
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = { fetched: false, games: [] }
   }
   async componentDidMount() {
-    const res = await fetch(`${process.env.REACT_APP_API_HOST}/api/games`)
-    const json = await res.json()
-    this.setState(_ => ({ fetched: true, games: json.data }))
+    const body = await games.findAll()
+    this.setState(_ => ({ fetched: true, games: body.data }))
   }
   renderLoading() {
     return <div>Loading...</div>
@@ -19,7 +20,7 @@ export default class extends React.Component {
       <ul>
         <li>
           {this.state.games.map(game =>
-            <Link to={`/game/${game.id}`}>
+            <Link to={`/game/${game.id}`} key={game.id}>
               {game.id}
             </Link>
           )}
