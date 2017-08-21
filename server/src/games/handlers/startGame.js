@@ -1,5 +1,3 @@
-const handlers = {}
-
 const err = (code, detail) => ({ code, detail })
 
 const startGameErrors = (game, play) => {
@@ -14,7 +12,7 @@ const startGameErrors = (game, play) => {
     ? null
     : { ...game, errors: game.errors.concat(errs) }
 }
-handlers.startGame = (game, play) =>
+module.exports = (game, play) =>
   startGameErrors(game, play) || {
     ...game,
     state: {
@@ -22,4 +20,3 @@ handlers.startGame = (game, play) =>
       phase: 'play'
     }
   }
-module.exports = handlers

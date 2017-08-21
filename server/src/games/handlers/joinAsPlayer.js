@@ -1,5 +1,3 @@
-const handlers = {}
-
 const err = (code, detail) => ({ code, detail })
 
 const joinAsPlayerErrors = (game, play) => {
@@ -15,7 +13,7 @@ const joinAsPlayerErrors = (game, play) => {
     ? null
     : { ...game, errors: game.errors.concat(errs) }
 }
-handlers.joinAsPlayer = (game, play) =>
+module.exports = (game, play) =>
   joinAsPlayerErrors(game, play) || {
     ...game,
     state: {
@@ -23,4 +21,3 @@ handlers.joinAsPlayer = (game, play) =>
       players: game.state.players.concat([{ name: play.newPlayerName }])
     }
   }
-module.exports = handlers

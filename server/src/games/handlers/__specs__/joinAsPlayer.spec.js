@@ -1,12 +1,6 @@
 const gameState = require('../../state')
 
-test('initialState', () => {
-  const game = gameState()
-
-  expect(game.state.players).toEqual([])
-})
-
-test('joinAsPlayer with name', () => {
+test('valid', () => {
   const game = gameState(null, {
     type: 'joinAsPlayer',
     newPlayerName: 'Jake'
@@ -16,7 +10,7 @@ test('joinAsPlayer with name', () => {
   expect(game.state.players[0].name).toEqual('Jake')
 })
 
-test('joinAsPlayer invalid name', () => {
+test('invalid name', () => {
   const game = gameState(null, {
     type: 'joinAsPlayer',
     newPlayerName: null
@@ -27,7 +21,7 @@ test('joinAsPlayer invalid name', () => {
   expect(game.errors[0].detail).toEqual('Player name is required')
 })
 
-test('joinAsPlayer invalid max players', () => {
+test('invalid max players', () => {
   const game = gameState(
     { state: { players: [{}, {}, {}, {}] }, errors: [] },
     {
